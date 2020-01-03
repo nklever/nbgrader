@@ -1,4 +1,4 @@
-#! /opt/anaconda3/bin/python
+#! /usr/bin/python
 """
 Builds an additional (multiple) course to an existing jupyterhub+nbgrader installation
 
@@ -304,7 +304,7 @@ if __name__ == '__main__':
     #
 
     # jupyterhub_api_token
-    jupyterhub_api_token = 'd2d3e9bb413845dd953908fa094aeff4'
+    jupyterhub_api_token = 'api_token'
 
     # if jupyterhub_service_port should be retrieved automatically,  
     # all jupyterhub_service_ports for courses should start with the same first numbers 
@@ -312,7 +312,7 @@ if __name__ == '__main__':
     jupyterhub_service_port_startnumbers = 19
 
     # template for home directories of teachers, TEACHER and COURSE will be replaced
-    nbgrader_course_directory_template = '/home/ldapuser/TEACHER/Courses/COURSE'
+    nbgrader_course_directory_template = '/home/TEACHER/Courses/COURSE'
     
     #
     # Parse arguments 
@@ -329,7 +329,7 @@ if __name__ == '__main__':
     args.logging_separator = '-'*60
     args.logging_filename = f'{os.path.basename(__file__)}.log'
     args.logging_format = '[%(asctime)s: %(filename)s.%(lineno)s - %(levelname)s] %(message)s'
-    args.jupyter_bin_command='/opt/anaconda3/bin/jupyter'
+    args.jupyter_bin_command='/usr/bin/jupyter'
 
     #
     # Create a nbgrader course header 
@@ -340,15 +340,9 @@ if __name__ == '__main__':
         #
         # Markdown cell text for first cell in jupyter notebook header.ipynb 
         #
-        nb_markdown_cell = """# Bitte die folgenden Hinweise beachten
+        nb_markdown_cell = """# Consider the following hint
 
-1. Bevor sie diese Aufgabe abgeben, stellen sie sicher, dass alles so abläuft, wie sie es erwarten. Starten sie als erstes ihr Notebook neu, indem sie den **Kernel neu starten** (wählen sie in der Menüleiste Kernel$\rightarrow$Restart) und anschliessend lassen sie **alle Zellen nochmal durchlaufen** (wählen sie in der Menüleiste Cell$\rightarrow$Run All).
-
-2. Stellen sie sicher, dass sie an allen Stellen, wo **Geben sie hier ihren Code ein** oder **Geben sie hier ihre Antwort ein** ihren Code bzw. ihre Antwort **in genau diesen Zellen** eingeben.
-
-3. Bitte **löschen und kopieren sie keine der vorgegebenen Zellen !** 
-
-4. Ebenso geben sie hier in der nächsten Zelle ihren Namen (inkl. Vornamen) ein:
+Enter your name into the following cell:
 """
         args.nbgrader_course_header_ipynb.cells.append(nbformat.v4.new_markdown_cell(nb_markdown_cell))
         #
@@ -363,8 +357,8 @@ if __name__ == '__main__':
     # Variables might also be overwritten here e.g. for testing
     #
     
-    #args.logging_level = logging.DEBUG
-    #args.nbgrader_course_directory = f'{os.getcwd()}/ldapuser/{args.nbgrader_teacher_account}/Courses/{args.nbgrader_course_id}'
+    args.logging_level = logging.DEBUG
+    #args.nbgrader_course_directory = f'{os.getcwd()}/TestNbgraderDir/{args.nbgrader_teacher_account}/Courses/{args.nbgrader_course_id}'
 
     #
     # Creating and starting logging
@@ -382,7 +376,7 @@ if __name__ == '__main__':
     #
     
     courseInstance = createMultipleCourse(**args.__dict__)
-    
+
     #
     # Check for existing groups and services in jupyterhub config file (could be commented out, if already done)
     # 
