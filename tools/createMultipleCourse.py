@@ -89,6 +89,8 @@ c.JupyterHub.load_groups.update({{
    }}
 )
 
+c.Authenticator.admin_users.update({{'{self.nbgrader_teacher_account}'}})
+
 c.JupyterHub.services.append(
     {{
         'name': '{self.nbgrader_course_id}',
